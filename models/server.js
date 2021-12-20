@@ -13,7 +13,8 @@ class Server {
         this.ConnectDB();
 
         // Endpoints
-        this.userEndpoint = '/api/auth';
+        this.userEndpoint = '/api/users';
+        this.authEndpoint = '/api/auth';
 
         // Middlewares
         this.middlewares();
@@ -38,7 +39,8 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.userEndpoint, require('../routes/auth'));
+        this.app.use(this.authEndpoint, require('../routes/auth'));
+        this.app.use(this.userEndpoint, require('../routes/users'));
     }
 
     listen() {
