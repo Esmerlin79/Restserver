@@ -64,16 +64,10 @@ const updateUser = async (req = request, res = response) => {
             rest.password = bcrypt.hashSync( password, passwordSalt );
         }
 
-        const user = await User.findByIdAndUpdate( id, rest );
+        const user = await User.findByIdAndUpdate( id, rest, { new: true } );
 
-        res.json({
-            name: rest.name,
-            email: user.email,
-            role: rest.role,
-            status: user.status,
-            google: user.google,
-            uid: id
-        })
+        res.json( user );
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -86,8 +80,7 @@ const deleteUser = async (req = request, res = response) => {
 
     const { id } = req.params;
 
-    const user = await User.findByIdAndUpdate(id, { status: false });
-    user.status = false;
+    const user = await User.findByIdAndUpdate(id, { status: false }, { new: true });
 
     res.json( user )
 }
