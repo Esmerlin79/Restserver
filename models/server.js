@@ -13,8 +13,11 @@ class Server {
         this.ConnectDB();
 
         // Endpoints
-        this.userEndpoint = '/api/users';
-        this.authEndpoint = '/api/auth';
+        this.endpoints = {
+            users:      '/api/users',
+            auth:       '/api/auth',
+            categories: '/api/categories'
+        }
 
         // Middlewares
         this.middlewares();
@@ -39,8 +42,9 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.authEndpoint, require('../routes/auth'));
-        this.app.use(this.userEndpoint, require('../routes/users'));
+        this.app.use(this.endpoints.auth, require('../routes/auth'));
+        this.app.use(this.endpoints.users, require('../routes/users'));
+        this.app.use(this.endpoints.categories, require('../routes/categories'));
     }
 
     listen() {
