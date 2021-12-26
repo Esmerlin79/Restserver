@@ -18,5 +18,9 @@
     "google-auth-library": "^7.11.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.2"
+  },
+  "devDependencies": {
+    "jest": "^27.4.5",
+    "supertest": "^6.1.6"
   }
 }

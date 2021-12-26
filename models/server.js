@@ -14,9 +14,10 @@ class Server {
 
         // Endpoints
         this.endpoints = {
-            users:      '/api/users',
             auth:       '/api/auth',
-            categories: '/api/categories'
+            users:      '/api/users',
+            categories: '/api/categories',
+            products:   '/api/products',
         }
 
         // Middlewares
@@ -45,6 +46,7 @@ class Server {
         this.app.use(this.endpoints.auth, require('../routes/auth'));
         this.app.use(this.endpoints.users, require('../routes/users'));
         this.app.use(this.endpoints.categories, require('../routes/categories'));
+        this.app.use(this.endpoints.products, require('../routes/products'));
     }
 
     listen() {
