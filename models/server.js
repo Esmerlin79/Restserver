@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 const { dbConnection } = require('../database/config');
 
@@ -19,6 +20,7 @@ class Server {
             categories: '/api/categories',
             products:   '/api/products',
             search:     '/api/search',
+            uploads:     '/api/uploads',
         }
 
         // Middlewares
@@ -41,6 +43,13 @@ class Server {
 
         // Parse body
         this.app.use( express.json() );
+
+        // Fileupload
+        this.app.use(fileUpload({
+            useTempFiles: true,
+            tempFileDir: '/tmp/',
+            createParentPath: true
+        }));
     }
 
     routes() {
@@ -49,6 +58,7 @@ class Server {
         this.app.use(this.endpoints.categories, require('../routes/categories'));
         this.app.use(this.endpoints.products, require('../routes/products'));
         this.app.use(this.endpoints.search, require('../routes/search'));
+        this.app.use(this.endpoints.uploads, require('../routes/uploads'));
     }
 
     listen() {

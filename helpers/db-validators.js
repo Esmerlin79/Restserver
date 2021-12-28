@@ -29,10 +29,19 @@ const isProductExist = async ( id ) => {
     if( !productExist ) throw new Error(`There is no product with id ${id}`);
 }
 
+// validate allowed collections
+const collectionsAllowed = ( collection = '', collections = [] ) => {
+    const isInclude = collections.includes( collection ); 
+    if( !isInclude ) throw new Error(`${collection} collection is not allowed, ${collections}`);
+
+    return true;
+}
+
 module.exports = {
     isValidRole,
     isEmailExist,
     isUserExistById,
     isCategoryExist,
-    isProductExist
+    isProductExist,
+    collectionsAllowed
 }
