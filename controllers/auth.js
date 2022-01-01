@@ -91,7 +91,27 @@ const googleSignIn = async (req = request, res = response) => {
    }
 }
 
+const renewToken = async (req, res = response) => {
+
+    try {
+        const { user } = req;
+
+        const token = await generateJWT( user.id );
+
+        res.json({
+            user,
+            token
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Internal server error'
+        })
+    }
+}
+
 module.exports = {
     login,
     googleSignIn,
+    renewToken,
 }
