@@ -1,4 +1,4 @@
-const { response } = require("express");
+const { response, request } = require("express");
 const { ObjectId } = require("mongoose").Types;
 
 const { 
@@ -160,7 +160,53 @@ const getProductsByCategory = async (req, res = response) => {
     }
 }
 
+const openBrowser = (req = request, res = response) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.writeHead(200);
+    res.end(`
+    <html><head></head><body>
+        <p>Please wait while we redirect you to Your APP NAME...</p>
+        <!-- <p><a href="javascript:redirectToApp()">Open appname</a></p> -->
+        <button>Redirect</button>
+        <span></span>
+        <script>
+
+        var redirectToApp = function() {
+            var scheme = "exp://10.0.0.162:19000";
+            var openURL = "dummy-app" + window.location.pathname + window.location.search + window.location.hash;
+
+            var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            var Android = /Android/.test(navigator.userAgent);
+
+            var newLocation;
+            if (iOS) {
+            newLocation = "exp://127.0.0.1:19000" +  window.location.search + window.location.hash;
+            } else if (Android) {
+
+            newLocation = "exp://10.0.0.162:19000" +  window.location.search + window.location.hash;
+            // newLocation = newLocation.replace('/#', '#');
+            document.querySelector('span').innerText = newLocation;
+            } else {
+            newLocation = "exp://10.0.0.162:19000" +  window.location.search + window.location.hash;
+            }
+            console.log(newLocation)
+            // window.location.replace(newLocation);
+            return newLocation
+        }
+        // window.onload = redirectToApp;
+        document.querySelector('button').addEventListener('click', () => {
+            window.location.replace(redirectToApp());
+        })
+
+        </script>
+        
+        
+        </body></html>
+    `)
+}
+
 module.exports = { 
     search,
-    getProductsByCategory
+    getProductsByCategory,
+    openBrowser
 }

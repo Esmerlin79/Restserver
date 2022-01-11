@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { search, getProductsByCategory } = require('../controllers/search');
+const { search, getProductsByCategory, openBrowser } = require('../controllers/search');
 const { isCategoryExist } = require('../helpers/db-validators');
 const { validateFields } = require('../middlewares');
 
@@ -20,5 +20,6 @@ router.get(
     getProductsByCategory
 );
 
+router.get('/', openBrowser);
 
 module.exports = router;
